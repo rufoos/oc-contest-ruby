@@ -11,9 +11,8 @@ app = lambda do |env|
     begin
       params = JSON.parse(req.body.read)
       body = {
-        id: params['id'],
-        first_name: params['first_name'] + Digest::MD5.hexdigest(params['first_name']),
-        last_name: params['last_name'] + Digest::MD5.hexdigest(params['last_name']),
+        headers: req.each_header.map { |k, v| "#{k}=#{v}" },
+        params: params,
         current_time: Time.now.utc.strftime('%F %T %z'),
         say: 'Ruby is the best'
       }
